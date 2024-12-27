@@ -6,12 +6,15 @@
 </head>
 <body>
     <h1> This is a main page </h1> 
-    <h3> id : {{id}}, name : {{name}}, marks : {{marks}} </h3>
+    {% comment %} <h3> id : {{id}}, name : {{name}}, marks : {{marks}} </h3>
     <h3> list : {{lst}} </h3>
     <h4>{{ lst | length }}</h4>
     <h4>{{ val | add:"4" }}</h4>
  
     <h4>{{ str | capfirst }}</h4>
-    <h4>{{ nmb | linenumbers }}</h4>
+    <h4>{{ nmb | linenumbers }}</h4> {% endcomment %}
+
+    <h5> {{ lst | join:" - " }} </h5>
+    <h5> {{ strr | cut:" " }} </h5>
 </body>
 </html>
