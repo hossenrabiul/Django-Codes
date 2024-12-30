@@ -2,6 +2,7 @@
 
 {% block content %}
   <h1> This is main page </h1>
+  
   {% for i in data %}
   <div class="card" style="width: 18rem;">
     <img src="{{i.strMealThumb}}" class="card-img-top" alt="...">
@@ -12,4 +13,5 @@
     </div>
   </div>
   {% endfor %}
+
 {% endblock %}
