@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %} 
+{% load crispy_forms_tags %}
+{% comment %} <h1> This is a task page </h1> {% endcomment %}
+<div>
+    <form style = "width: 50%; margin: auto" class = "pt-5" method = "post">
+        {% csrf_token %}
+        {{form|crispy}}
+
+        <button class = "btn btn-warning"> Submit </button>
+    </form>
+</div>
+{% endblock content %}

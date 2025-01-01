@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %} 
+{% comment %} <h1> This is a category page </h1> {% endcomment %}
+{% load crispy_forms_tags %}
+<div>
+    <form style = "width: 50%; margin: auto" class = "pt-5" method = 'post'>
+        {% csrf_token %}
+        {{form|crispy}}
+
+        <button class = "btn btn-warning"> Submit </button>
+    </form>
+</div>
+{% endblock %}

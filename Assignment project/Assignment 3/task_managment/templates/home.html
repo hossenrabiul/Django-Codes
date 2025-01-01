@@ -1,0 +1,31 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="d-flex flex-wrap justipy-content-center px-5 py-5">
+  {% for data in form %}
+  <div class="col-sm-3">
+    <div class="card mx-2 shadow-lg p-3 mb-2 bg-body-tertiary rounded" style = "height: auto">
+      <div class="card-body">
+        <h5 class="card-title">{{data.id}}</h5>
+        <p class="card-text">{{data.taskAssignDate}}</p>
+        <p>{{data.taskDescription}}</p>
+        <small>Category :</small>
+        {% for cat in data.cate.all%}
+        <button type="button" class="btn btn-warning m-1">{{cat.name}}</button>
+        {% endfor %}
+
+        <div class="d-flex justipy-content-around gap-2">
+          {% if data.is_Completed %}
+          <button type="button" class="btn btn-outline-warning btn-lg mt-2">
+            Completed
+          </button>
+          {% else %}
+          <a href="{% url 'edit_task' data.id %}" class="btn btn-info">Edit</a>
+          <a href="{% url 'dlt' data.id %}" class="btn btn-danger">Delete</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock content %}

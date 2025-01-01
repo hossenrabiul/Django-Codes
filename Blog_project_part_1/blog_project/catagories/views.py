@@ -10,5 +10,4 @@ def add_category(request):
             return redirect('add_catagories')
     else:
         category_form = forms.category_Form()
-        
     return render(request, 'add_catagories.html',{'form' : category_form})
