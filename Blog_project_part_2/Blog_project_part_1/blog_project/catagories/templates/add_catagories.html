@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% comment %} {% load cirspy_forms_tags %} {% endcomment %}
+
+{% block content %}
+
+<form style = "width:50%; margin: auto" method = "post">
+    <h1> add catagory page </h1>
+    {% csrf_token %}
+    {{form}}
+
+    <button class = "btn btn-warning"> Submit </button>
+</form>
+
+{% endblock  %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load cirspy_forms_tags %}
+
+{% block content %}
+
+<form style = "width:50%; margin: auto" method = "post">
+    <h1> add Brand page </h1>
+    {% csrf_token %}
+    {{form}}
+
+    <button class = "btn btn-warning"> Submit </button>
+</form>
+
+{% endblock  %}
