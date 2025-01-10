@@ -93,14 +93,6 @@ def detail(request, id):
 
 
 
-    
-        
-
-   
-
-
-
-
 class DetailPostView(DetailView):
     model = models.Post
     template_name = 'post_details.html'

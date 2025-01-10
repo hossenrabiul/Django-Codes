@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from . import forms
+
 # Create your views here.
 
 def addBrandName(request):
@@ -11,4 +13,5 @@ def addBrandName(request):
     else:
         brand_form = forms.BrandForm()
     return render(request, 'add_brand.html',{'form' : brand_form})
- 
+
+

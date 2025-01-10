@@ -54,7 +54,7 @@
               <li class="nav-item mx-3">
                 <a
                   class="btn btn-danger text-dark"
-                  href=""
+                  href="{% url 'logout' %}"
                   >Logout</a
                 >
               </li>
@@ -80,9 +80,9 @@
       </div>
     </nav>
 
-    {% comment %} {% for i in messages %}
+    {% for i in messages %}
     <h3 class="text-{{i.tags}}">{{i}}</h3>
-   {% endfor %} {% endcomment %}
+   {% endfor %}
     {% block content %} {% endblock %}
 
 

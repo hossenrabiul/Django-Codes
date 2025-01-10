@@ -1,0 +1,27 @@
+{% extends "base.html" %} {% block content %} {% load crispy_forms_tags %}
+
+<div class="col-sm-12">
+  <div class="card mx-2">
+    <div class="card-body ms-3">
+      <img
+        src="{{car.image.url}}"
+        class="card-img-top"
+        style="width: 50%; margin: 50px"
+      />
+      <h5 class="card-title">{{car.CarName}}</h5>
+      <p class="card-text">{{car.price}}</p>
+
+      <p class="card-text">
+        Author : {{car.author.first_name}} {{car.author.last_name}}
+      </p>
+
+      <p class="card-text">
+        <button class="btn btn-warning btn-sm m-2" disabled>
+          Brands : {{car.CarName}}
+        </button>
+      </p>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

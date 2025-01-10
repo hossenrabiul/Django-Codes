@@ -1,40 +1,59 @@
-{% extends 'base.html' %} 
-{% load crispy_forms_tags %} 
-{% block content %}
-<h1>Profile page</h1>
-<div>
-  {% comment %} <a class="btn btn-primary mt-3" href="{% url 'edit_profile'%}">
-    Update Your Profile
-  </a> {% endcomment %}
-</div>
+{% extends "base.html" %} {% load crispy_forms_tags %} {% block content%}
 
-<div class="d-flex flex-wrap justipy-content-center px-5 py-5">
-  {% for post in data %}
-  <div class="col-sm-3">
-    <div class="card mx-2">
-      <div class="card-body ms-3">
-        <h5 class="card-title">{{post.image.url}}</h5>
-        <p class="card-text">{{post.brandName}}</p>
-        <p class="card-text">{{post.price}}</p>
-        {% comment %} <p class="card-text">
-          Author : {{post.author.first_name}} {{post.author.last_name}}
-        </p> {% endcomment %}
-        {% comment %} <p class="card-text">
-          Category : {% for cat in post.category.all%}
-          <button class="btn btn-warning btn-sm m-2" disabled>
-            {{cat.name}}
-          </button>
-          {% endfor %}
-        </p> {% endcomment %}
-     
-        {% comment %} <a href="{% url 'edit_post' post.id %}" class="btn btn-primary">Edit</a>
-        <a href="{% url 'delete_post' post.id %}" class="btn btn-primary"
-          >Delete</a
-        > {% endcomment %}
-     
+<div class="mt-20">
+  <h1 class="text-4xl text-center font-bold pb-8">Your Profile</h1>
+
+  <div class="d-flex flex-wrap gap-5 m-5">
+    <!-- Sidebar Section -->
+      <div class="">
+        {% for trnsaction in historys %}
+        <div class="">
+          <div class="card mx-1 my-2">
+            <div class="card-body ms-3">
+              <h5 class="card-title">{{trnsaction.image.url}}</h5>
+              <p class="card-text">{{trnsaction.title}}</p>
+              <p class="card-text">{{trnsaction.money}}</p>
+              <p class="card-text">
+                Author : {{trnsaction.author.first_name}}
+                {{trnsaction.author.last_name}}
+              </p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
       </div>
+
+
+    <!-- Main Content Section -->
+
+    <div class="d-flex gap-2">
+      {% for post in data %}
+      <div class="">
+        <div class="card">
+          <div class="card-body ms-3">
+            <p class="card-text">{{post.brandName}}</p>
+            <p class="card-text">{{post.price}}</p>
+            <p class="card-text">
+              Author : {{post.author.first_name}} {{post.author.last_name}}
+            </p>
+            <p class="card-text">
+              Brands :
+              <button class="btn btn-warning btn-sm m-2" disabled>
+                {{post.CarName}}
+              </button>
+            </p>
+
+            <a href="{% url 'edit_post' post.id %}" class="btn btn-primary"
+              >Edit</a
+            >
+            <a href="{% url 'delete_post' post.id %}" class="btn btn-primary"
+              >Delete</a
+            >
+          </div>
+        </div>
+      </div>
+      {% endfor %}
     </div>
   </div>
-  {% endfor %}
 </div>
 {% endblock %}
