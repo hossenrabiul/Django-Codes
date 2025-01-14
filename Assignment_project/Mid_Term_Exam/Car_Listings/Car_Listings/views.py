@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from car_list.models import CarList
 from car_brand.models import Brand
+
 def home(request, brand_slug = None):
     data = CarList.objects.all()
     print(data)

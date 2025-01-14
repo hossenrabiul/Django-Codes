@@ -11,7 +11,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 # Create your views here.
 
-
+ 
 class CarView(LoginRequiredMixin,CreateView):
     template_name = 'add_car_list.html'
     form_class = forms.CarForm
@@ -24,6 +24,7 @@ class CarView(LoginRequiredMixin,CreateView):
     def form_invalid(self, form):
         messages.error(self.request,"invalid info")
         return super().form_invalid(form)
+
 
 
 @login_required
