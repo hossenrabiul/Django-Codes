@@ -10,6 +10,7 @@ from django.http import HttpResponse
 from datetime import datetime
 from django.views import View
 from django.shortcuts import get_object_or_404, redirect
+from django.http import Http404
 from django.urls import reverse_lazy
 # Create your views here.
 
@@ -61,7 +62,7 @@ class withdrawMoneyView(TransactionCreateMixin):
         return initial
     
     def form_valid(self, form):
-        amount = self.cleaned_data.get('amount')
+        amount = form.cleaned_data.get('amount')
         account = self.request.user.account
         account.balance -= amount
         account.save(
@@ -80,7 +81,7 @@ class LoanRequestView(TransactionCreateMixin):
         return initial
     
     def form_valid(self, form):
-        amount = self.cleaned_data.get('amount')
+        amount = form.cleaned_data.get('amount')
         current_loan_count = Transaction.objects.filter(account = self.request.user.account, transaction_type = LOAN, loan_approve = True).count()   # user theke koita loan already exixt kore seta count krteci
 
         if current_loan_count >= 3:
@@ -112,7 +113,7 @@ class TransactionReportView(LoginRequiredMixin, ListView):
 
             queryset = queryset.filter(timestamp__date__gte = start_date, timestamp__date__lte = end_date)
 
-            self.balance =  Transaction.objects.filter(timestamp__date__gte = start_date, timestamp__date__lte = end_date).aggregate(Sum('amount'))['amount_sum']
+            self.balance =  Transaction.objects.filter(timestamp__date__gte = start_date, timestamp__date__lte = end_date).aggregate(Sum('amount'))['amount__sum']
         else:
             self.balance = self.request.user.account.balance
         
@@ -139,15 +140,15 @@ class PayLoanView(LoginRequiredMixin, View):
                 user_account.save()
                 loan.transaction_type = LOAN_PAID
                 loan.save()
-                return redirect('pay_loan')
+                return redirect('loan_list')
             else:
-                request.error(self.request, f'Your loan is more greather than your current balance')
-                return redirect('pay_loan')
+                messages.error(self.request, f'Your loan is more greather than your current balance')
+                return redirect('loan_list')
             
 
 class LoanListView(LoginRequiredMixin, ListView):
     model = Transaction
-    template_name = ''
+    template_name = 'transactions/loan_request.html'
     context_object_name = 'loans'
 
     def get_queryset(self):

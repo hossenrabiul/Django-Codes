@@ -9,7 +9,7 @@ class TransactionForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         self.account = kwargs.pop('account')
-        super.__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields['transaction_type'].disabled = True   # ei field disable thakbe
         self.fields['transaction_type'].widget = forms.HiddenInput()  # user er theke hide thakbe
     
@@ -22,7 +22,7 @@ class TransactionForm(forms.ModelForm):
 class DepositForm(TransactionForm):
     def clean_amount(self):
         min_deposit_amount = 500
-        amount = self.cleaned_data(self.amount)
+        amount = self.cleaned_data.get('amount')
         if amount < min_deposit_amount:
             raise forms.ValidationError(
                 f'You have to deposit at least {min_deposit_amount}$'
@@ -54,7 +54,6 @@ class WithdrawalForm(TransactionForm):
 
 class LoanRequestForm(TransactionForm):
     def clean_amount(self):
-        amount = self.cleaned_data('amount')
-
+        amount = self.cleaned_data.get('amount')
         return amount
 
