@@ -1,0 +1,6 @@
+DEPOSIT = 1
+PARCHASED = 2
+TRANSACTION_TYPE = (
+    {DEPOSIT, 'Deposit'},
+    (PARCHASED, 'PARCHASED'),
+)

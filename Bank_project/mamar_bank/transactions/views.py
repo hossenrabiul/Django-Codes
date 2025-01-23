@@ -12,7 +12,21 @@ from django.views import View
 from django.shortcuts import get_object_or_404, redirect
 from django.http import Http404
 from django.urls import reverse_lazy
+from django.core.mail import EmailMessage, EmailMultiAlternatives
+from django.template.loader import render_to_string
 # Create your views here.
+
+def send_transaction_email(user, amount, subject, template):
+        mail_subject = subject
+        message = render_to_string(template, {
+            'user' : user,
+            'amount' : amount,
+        })
+        to_email = user.email
+        send_email = EmailMultiAlternatives(mail_subject, '', to=[to_email])
+        send_email.attach_alternative(message, "text/html")
+        send_email.send()
+     
 
 class TransactionCreateMixin(LoginRequiredMixin, CreateView):
     template_name =  'transactions/transaction_form.html'
@@ -34,6 +48,7 @@ class TransactionCreateMixin(LoginRequiredMixin, CreateView):
         })
         return context
 
+
 class DepositMoneyView(TransactionCreateMixin):
     form_class = DepositForm
     title = 'Deposit'
@@ -50,6 +65,23 @@ class DepositMoneyView(TransactionCreateMixin):
             update_fields = ['balance']
         ) 
         messages.success(self.request, f'{amount}$ was deposited to your account successfully ')
+
+        # email send krteci jei user tk deposit krce
+        send_transaction_email(self.request.user, amount, "deposit message", 'transactions/deposit_email.html')
+
+        # mail_subject = "deposit message"
+        # message = render_to_string('transactions/deposit_email.html',{
+        #     'user' : self.request.user,
+        #     'amount' : amount,
+        # })
+        # to_email = self.request.user.email
+        # send_email = EmailMultiAlternatives(mail_subject, '', to=[to_email])
+        # send_email.attach_alternative(message, "text/html")
+        # send_email.send()
+
+        # Finished here
+
+
         return super().form_valid(form)
     
 
@@ -69,6 +101,8 @@ class withdrawMoneyView(TransactionCreateMixin):
             update_fields = ['balance']
         )
         messages.success(self.request, f'{amount}$ was withdrawal from your account successfully ')
+
+        send_transaction_email(self.request.user, amount, "Withdrawal message", 'transactions/withdraw_email.html')
         return super().form_valid(form)
     
     
@@ -88,6 +122,8 @@ class LoanRequestView(TransactionCreateMixin):
             return HttpResponse('You have crossed your loan limits')
         
         messages.success(self.request, f'Loan request for {amount}$ has been successfull')
+        
+        send_transaction_email(self.request.user, amount, "Loan Request message", 'transactions/loan_email.html')
         return super().form_valid(form)
     
 
